@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 )
 
 // Represents the article object
@@ -22,39 +21,33 @@ type Recommendations struct {
 	Myad    []Article `json:"myad"`    // represents the articles catch by the myad algorithm
 }
 
-// Read the json file in the given path
-func ReadFile(path string) []byte {
+// Read the json file in the given path and decode
+// the content of the json file in the recommendations struct
+func ParseFile(path string) (*Recommendations, error) {
+	// we read the file with read file function
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
-		log.Fatalf("It was not posible to open the File: %s\n", err.Error())
+		return nil, err
 	}
 
-	return content
-}
-
-// decode the content of the json file in the recommendations struct
-func parseJson(content []byte) *Recommendations {
+	// we deocde the json content in
+	// the recommendatios struct
 	var payload Recommendations
-	err := json.Unmarshal(content, &payload)
+	err = json.Unmarshal(content, &payload)
 	if err != nil {
-		log.Fatalf("Unable to marshal the json file %s", err.Error())
+		return nil, err
 	}
 
-	return &payload
+	// we return a pointer to the payload
+	// to avoid duplicates in memory
+	return &payload, nil
 }
 
 func main() {
-	content := ReadFile("./tests/test1.json")
-	recommendations := parseJson(content)
-	if recommendations.Logs != nil {
-		fmt.Println(recommendations.Logs)
+	recommendations, err := ParseFile("./tests/test1.json")
+	if err != nil {
+		fmt.Println(err.Error())
 	}
 
-	if len(recommendations.Content) != 0 {
-		fmt.Println("Fallo")
-	}
-
-	if len(recommendations.Myad) != 0 {
-		fmt.Println("Fallo")
-	}
+	fmt.Println(recommendations)
 }
