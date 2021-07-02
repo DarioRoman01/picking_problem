@@ -1,3 +1,3 @@
-module github.com/Haizza1/picking_problem
+module github.com/DarioRoman01/picking_problem
 
 go 1.16

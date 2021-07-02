@@ -32,13 +32,13 @@ func totalLen(r map[string][]Article) int {
 	return len(r["logs"]) + len(r["content"]) + len(r["myad"])
 }
 
-// Find most homogenues recommendatios based on the Road Robin aproach
+// Find most homegenous recommendatios based on the Road Robin aproach
 func FindRecommendations(recommendations map[string][]Article) []string {
 	var tokens []string
 	totallen := totalLen(recommendations)
 	index := 0
 
-	// loop until we find the most homogenues list of recommendations.
+	// loop until we find the most homegenous list of recommendations.
 	// The worst case is have recommendations in only one algorithm.
 	for i := 0; i < 4; i++ {
 		if len(tokens) == totallen {
