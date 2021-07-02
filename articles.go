@@ -1,4 +1,4 @@
-package main
+package picking_problem
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 )
 
 // Represents the article object
-type Article struct {
+type article struct {
 	Url       string `json:"url"`       // represents the url of the article
 	Token     string `json:"token"`     // represents the unique token of the article
 	Thumbnail string `json:"thumbnail"` // represents the image thumbnail
@@ -15,25 +15,25 @@ type Article struct {
 
 // Read the json file in the given path and decode
 // the content of the json file in the recommendations struct
-func ParseFile(path string) (map[string][]Article, error) {
+func parseFile(path string) (map[string][]article, error) {
 	// we read the file with read file function
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 
-	var payload map[string][]Article
+	var payload map[string][]article
 	json.Unmarshal(content, &payload)
 	return payload, nil
 }
 
 // return the total length of the recommended articles
-func totalLen(r map[string][]Article) int {
+func totalLen(r map[string][]article) int {
 	return len(r["logs"]) + len(r["content"]) + len(r["myad"])
 }
 
 // Find most homegenous recommendatios based on the Road Robin aproach
-func FindRecommendations(recommendations map[string][]Article) []string {
+func balance(recommendations map[string][]article) []string {
 	var tokens []string
 	totallen := totalLen(recommendations)
 	index := 0
@@ -60,4 +60,14 @@ func FindRecommendations(recommendations map[string][]Article) []string {
 	}
 
 	return tokens
+}
+
+// Find the most Homogenous recommendation in the json file
+func FindMostHomogenousRecommendations(path string) ([]string, error) {
+	recommendations, err := parseFile(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return balance(recommendations), nil
 }
