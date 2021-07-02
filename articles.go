@@ -14,7 +14,7 @@ type article struct {
 }
 
 // Read the json file in the given path and decode
-// the content of the json file in the recommendations struct
+// the content of the json file in a hashmap
 func parseFile(path string) (map[string][]article, error) {
 	// we read the file with read file function
 	content, err := ioutil.ReadFile(path)
@@ -54,13 +54,15 @@ func balance(recommendations map[string][]article) []string {
 			}
 
 			tokens = append(tokens, value[i].Token)
-			if len(tokens) >= 4 {
+			// we have the most homogenous recommendatios based on the algorithm
+			if len(tokens) == 4 {
 				return tokens
 			}
 		}
 
 	}
 
+	// this is the worst sceneario when we dont break the outer loop
 	return tokens
 }
 
