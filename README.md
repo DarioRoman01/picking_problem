@@ -9,13 +9,16 @@ go get github.com/DarioRoman01/picking_problem
 package main
 
 import (
-    "fmt"
-    p "github.com/DarioRoman01/picking_problem"
+	"fmt"
+	p "github.com/DarioRoman01/picking_problem"
 )
 
 func main() {
-    recommendations := p.ParseFile("./path/to/your/file.json")
-    tokens := FindRecomendations(recommendations)
-    fmt.Println(tokens)
+	tokens, err := p.FindMostHomogenousRecommendations("./test.json")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+    
+	fmt.Println(tokens)
 }
 ```
