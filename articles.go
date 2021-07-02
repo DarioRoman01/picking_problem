@@ -36,7 +36,7 @@ func totalLen(r map[string][]article) int {
 func balance(recommendations map[string][]article) []string {
 	var tokens []string
 	totallen := totalLen(recommendations)
-	index := 0
+	// index := 0
 
 	// loop until we find the most homegenous list of recommendations.
 	// The worst case is have recommendations in only one algorithm.
@@ -46,17 +46,17 @@ func balance(recommendations map[string][]article) []string {
 		}
 
 		for _, value := range recommendations {
-			if len(value) == 0 || index >= len(value) {
+			if len(value) == 0 || i >= len(value) {
 				continue
 			}
 
-			tokens = append(tokens, value[index].Token)
+			tokens = append(tokens, value[i].Token)
 			if len(tokens) >= 4 {
 				return tokens
 			}
 		}
 
-		index++
+		// index++
 	}
 
 	return tokens
