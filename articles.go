@@ -36,7 +36,6 @@ func totalLen(r map[string][]article) int {
 func balance(recommendations map[string][]article) []string {
 	var tokens []string
 	totallen := totalLen(recommendations)
-	// index := 0
 
 	// loop until we find the most homegenous list of recommendations.
 	// The worst case is have recommendations in only one algorithm.
@@ -56,7 +55,6 @@ func balance(recommendations map[string][]article) []string {
 			}
 		}
 
-		// index++
 	}
 
 	return tokens
