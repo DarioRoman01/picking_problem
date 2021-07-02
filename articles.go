@@ -23,7 +23,11 @@ func parseFile(path string) (map[string][]article, error) {
 	}
 
 	var payload map[string][]article
-	json.Unmarshal(content, &payload)
+	err = json.Unmarshal(content, &payload)
+	if err != nil {
+		return nil, err
+	}
+
 	return payload, nil
 }
 
